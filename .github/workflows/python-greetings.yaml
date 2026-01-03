@@ -37,8 +37,6 @@ jobs:
               run: docker compose -f docker-compose.yml up -d greetings-app-dev || echo "Container STARTED on DEV Environment"
             - name: Verify container is running by filtering running containers
               run: docker ps --filter "name=greetings-app-dev"
-
-            
     tests-on-dev:
         runs-on: ubuntu-latest
         needs: [deploy-to-dev]
@@ -48,8 +46,10 @@ jobs:
               run: echo "Executing Tests on DEV Environment..."
             - name: Pulling latest version of api-tests image from Docker Hub
               run: docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/api-tests:latest
+            - name: Starting docker service with latest image
+              run: docker compose -f docker-compose.yml up -d greetings-app-dev || echo "Container STARTED on DEV Environment"
             - name: Verify container is running by filtering running containers
-              run: docker ps --filter "name=greetings-app-prod"
+              run: docker ps --filter "name=greetings-app-dev"
             - name: Running API Tests against DEV Environment
               run: docker run --network="host" --rm ${{ secrets.DOCKER_HUB_USERNAME }}/api-tests:latest run greetings greetings_dev
     deploy-to-stg:
@@ -78,6 +78,10 @@ jobs:
               run: echo "Executing Tests on STG Environment..."
             - name: Pulling latest version of api-tests image from Docker Hub
               run: docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/api-tests:latest
+            - name: Starting docker service with latest image
+              run: docker compose -f docker-compose.yml up -d greetings-app-stg || echo "Container STARTED on STG Environment"
+            - name: Verify container is running by filtering running containers
+              run: docker ps --filter "name=greetings-app-stg"
             - name: Running API Tests against STG Environment
               run: docker run --network="host" --rm ${{ secrets.DOCKER_HUB_USERNAME }}/api-tests:latest run greetings greetings_stg
     deploy-to-prod:
@@ -106,5 +110,9 @@ jobs:
               run: echo "Executing Tests on PROD Environment..."
             - name: Pulling latest version of api-tests image from Docker Hub
               run: docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/api-tests:latest
+            - name: Starting docker service with latest image
+              run: docker compose -f docker-compose.yml up -d greetings-app-dev || echo "Container STARTED on DEV Environment"
+            - name: Verify container is running by filtering running containers
+              run: docker ps --filter "name=greetings-app-dev"
             - name: Running API Tests against PROD Environment
               run: docker run --network="host" --rm ${{ secrets.DOCKER_HUB_USERNAME }}/api-tests:latest run greetings greetings_prod
