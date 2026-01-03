@@ -4,6 +4,9 @@ inputs:
   environment:
     description: 'The target environment(dev, stg, prod)'
     required: true
+  docker_hub_username:
+    description: 'The Docker Hub username'
+    required: true
 runs:
   using: 'composite'
   steps:
@@ -11,8 +14,8 @@ runs:
       run: echo "Executing Tests on ${{ inputs.environment }} Environment..."
       shell: bash
     - name: Pulling latest version of api-tests image from Docker Hub
-      run: docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/api-tests:latest
+      run: docker pull ${{ inputs.docker_hub_username }}/api-tests:latest
       shell: bash
     - name: Running API Tests against DEV Environment
-      run: docker run --network="host" --rm ${{ secrets.DOCKER_HUB_USERNAME }}/api-tests:latest run greetings greetings_${{ inputs.environment }}
+      run: docker run --network="host" --rm ${{ inputs.docker_hub_username }}/api-tests:latest run greetings greetings_${{ inputs.environment }}
       shell: bash

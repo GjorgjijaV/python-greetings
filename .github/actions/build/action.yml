@@ -1,0 +1,25 @@
+name: Building Python Greetings Application Docker Image
+description: Builds and pushes the Python Greetings Docker image to Docker Hub
+inputs:
+  docker_hub_username:
+    description: 'The Docker Hub username'
+    required: true
+  docker_hub_access_token:
+    description: 'The Docker Hub access token'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+      - name: Step decription
+        run: echo "Building and deploying Python Greetings Docker image..."
+        shell: bash
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to Docker Hub
+        run: docker login -u ${{ inputs.docker_hub_username }} -p ${{ inputs.docker_hub_access_token }}
+        shell: bash
+      - name: Building and Pushing Docker image
+        run: |
+          docker build -t ${{ inputs.docker_hub_username }}/python-greetings-app:latest .
+          docker push ${{ inputs.docker_hub_username }}/python-greetings-app:latest
+        shell: bash

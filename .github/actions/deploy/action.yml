@@ -4,6 +4,9 @@ inputs:
   environment:
     description: 'The target environment for deployment (dev, stg, prod)'
     required: true
+  docker_hub_username:
+    description: 'The Docker Hub username'
+    required: true
 runs:
   using: 'composite'
   steps:
@@ -11,7 +14,7 @@ runs:
       run: echo "Deploying to ${{ inputs.environment}} Environment..."
       shell: bash
     - name: Pulling latest version of python-greetings-app image from Docker Hub
-      run: docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/python-greetings-app:latest
+      run: docker pull ${{ inputs.name }}/python-greetings-app:latest
       shell: bash
     - name: Stopping docker service if running
       run: docker-compose stop -f docker-compose.yml greetings-app-${{ inputs.environment }} || echo "Container STOPPED"
