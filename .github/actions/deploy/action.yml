@@ -26,5 +26,5 @@ runs:
       run: docker-compose -f docker-compose.yml up -d greetings-app-${{ inputs.environment }} || echo "Container STARTED on ${{ inputs.environment }} Environment"
       shell: bash
     - name: Verify container is running by filtering running containers
-      run: docker ps --filter "name=greetings-app-${{ inputs.environment }}"
+      run: docker ps
       shell: bash
