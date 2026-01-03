@@ -49,6 +49,7 @@ jobs:
             - uses: ./.github/actions/test
               with:
                 environment: 'stg'
+                docker_hub_username: ${{ secrets.DOCKER_HUB_USERNAME }}
     deploy-to-prod:
         runs-on: ubuntu-latest
         needs: [tests-on-stg]
