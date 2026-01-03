@@ -17,14 +17,14 @@ runs:
       run: docker pull ${{ inputs.docker_hub_username }}/python-greetings-app:latest
       shell: bash
     - name: Stopping docker service if running
-      run: docker-compose stop -f docker-compose.yml greetings-app-${{ inputs.environment }} || echo "Container STOPPED"
+      run: docker compose stop -f docker-compose.yml greetings-app-${{ inputs.environment }} || echo "Container STOPPED"
       shell: bash
     - name: Removing docker service if existing
-      run: docker-compose rm -f docker-compose.yml greetings-app-${{ inputs.environment }} || echo "Container REMOVED"
+      run: docker compose rm -f docker-compose.yml greetings-app-${{ inputs.environment }} || echo "Container REMOVED"
       shell: bash
     - name: Starting docker service with latest image
-      run: docker-compose -f docker-compose.yml up -d greetings-app-${{ inputs.environment }} || echo "Container STARTED on ${{ inputs.environment }} Environment"
+      run: docker compose -f docker-compose.yml up -d greetings-app-${{ inputs.environment }} || echo "Container STARTED on ${{ inputs.environment }} Environment"
       shell: bash
     - name: Verify container is running by filtering running containers
-      run: docker ps
+      run: docker ps --filter "name=greetings-app-${{ inputs.environment }}"
       shell: bash
