@@ -104,5 +104,7 @@ jobs:
               run: echo "Executing Tests on PROD Environment..."
             - name: Pulling latest version of api-tests image from Docker Hub
               run: docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/api-tests:latest
+            - name: Verify container is running by filtering running containers
+              run: docker ps --filter "name=greetings-app-prod"
             - name: Running API Tests against PROD Environment
               run: docker run --network="host" --rm ${{ secrets.DOCKER_HUB_USERNAME }}/api-tests:latest run greetings greetings_prod
