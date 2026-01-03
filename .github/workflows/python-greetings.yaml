@@ -36,7 +36,7 @@ jobs:
             - name: Starting docker service with latest image
               run: docker-compose -f docker-compose.yml up -d greetings-app-dev || echo "Container STARTED on DEV Environment"
             - name: Verify container is running by filtering running containers
-              run: docker ps | grep greetings-app-dev
+              run: docker ps --filter "name=greetings-app-dev"
 
             
     tests-on-dev:
@@ -66,7 +66,7 @@ jobs:
             - name: Starting docker service with latest image
               run: docker-compose -f docker-compose.yml up -d greetings-app-stg || echo "Container STARTED on STG Environment"
             - name: Verify container is running by filtering running containers
-              run: docker ps | grep greetings-app-stg
+              run: docker ps --filter "name=greetings-app-stg"
     tests-on-stg:
         runs-on: ubuntu-latest
         needs: [deploy-to-stg]
@@ -94,7 +94,7 @@ jobs:
             - name: Starting docker service with latest image
               run: docker-compose -f docker-compose.yml up -d greetings-app-prod || echo "Container STARTED on PROD Environment"
             - name: Verify container is running by filtering running containers
-              run: docker ps | grep greetings-app-prod
+              run: docker ps --filter "name=greetings-app-prod"
     tests-on-prod:
         runs-on: ubuntu-latest
         needs: [deploy-to-prod]
