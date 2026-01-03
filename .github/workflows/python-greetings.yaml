@@ -1,0 +1,55 @@
+name: Python Microservice Greetings CI/CD
+on:
+    push:
+        branches:
+            - main
+    workflow_dispatch:
+jobs:
+    build-docker-image:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - name: Step decription
+              run: echo "Building and deploying Python Greetings Docker image..."
+    deploy-to-dev:
+        runs-on: ubuntu-latest
+        needs: [build-docker-image]
+        steps:
+            - uses: actions/checkout@v3
+            - name: Step decription
+              run: echo "Deploying to DEV Environment..."
+    tests-on-dev:
+        runs-on: ubuntu-latest
+        needs: [deploy-to-dev]
+        steps:
+            - uses: actions/checkout@v3
+            - name: Step decription
+              run: echo "Executing Tests on DEV Environment..."
+    deploy-to-stg:
+        runs-on: ubuntu-latest
+        needs: [tests-on-dev]
+        steps:
+            - uses: actions/checkout@v3
+            - name: Step decription
+              run: echo "Deploying to STG Environment..."
+    tests-on-stg:
+        runs-on: ubuntu-latest
+        needs: [deploy-to-stg]
+        steps:
+            - uses: actions/checkout@v3
+            - name: Step decription
+              run: echo "Executing Tests on STG Environment..."
+    deploy-to-prod:
+        runs-on: ubuntu-latest
+        needs: [tests-on-stg]
+        steps:
+            - uses: actions/checkout@v3
+            - name: Step decription
+              run: echo "Deploying to PROD Environment..."
+    tests-on-prod:
+        runs-on: ubuntu-latest
+        needs: [deploy-to-prod]
+        steps:
+            - uses: actions/checkout@v3
+            - name: Step decription
+              run: echo "Executing Tests on PROD Environment..."
