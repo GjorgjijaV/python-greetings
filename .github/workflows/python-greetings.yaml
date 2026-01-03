@@ -30,11 +30,11 @@ jobs:
             - name: Pulling latest version of python-greetings-app image from Docker Hub
               run: docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/python-greetings-app:latest
             - name: Stopping docker service if running
-              run: docker-compose stop -f docker-compose.yml greetings-app-dev || echo "Container STOPPED"
+              run: docker compose stop -f docker-compose.yml greetings-app-dev || echo "Container STOPPED"
             - name: Removing docker service if existing
-              run: docker-compose rm -f docker-compose.yml greetings-app-dev || echo "Container REMOVED"
+              run: docker compose rm -f docker-compose.yml greetings-app-dev || echo "Container REMOVED"
             - name: Starting docker service with latest image
-              run: docker-compose -f docker-compose.yml up -d greetings-app-dev || echo "Container STARTED on DEV Environment"
+              run: docker compose -f docker-compose.yml up -d greetings-app-dev || echo "Container STARTED on DEV Environment"
             - name: Verify container is running by filtering running containers
               run: docker ps --filter "name=greetings-app-dev"
 
