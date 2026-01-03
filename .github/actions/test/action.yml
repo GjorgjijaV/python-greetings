@@ -1,0 +1,18 @@
+name: Testing Python Greetings Application
+description: Tests the Python Greetings application to specified environment
+inputs:
+  environment:
+    description: 'The target environment(dev, stg, prod)'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - name: Step decription
+      run: echo "Executing Tests on ${{ inputs.environment }} Environment..."
+      shell: bash
+    - name: Pulling latest version of api-tests image from Docker Hub
+      run: docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/api-tests:latest
+      shell: bash
+    - name: Running API Tests against DEV Environment
+      run: docker run --network="host" --rm ${{ secrets.DOCKER_HUB_USERNAME }}/api-tests:latest run greetings greetings_${{ inputs.environment }}
+      shell: bash
