@@ -34,7 +34,7 @@ jobs:
             - name: Removing docker service if existing
               run: docker compose rm -f docker-compose.yml greetings-app-dev || echo "Container REMOVED"
             - name: Starting docker service with latest image
-              run: docker compose -f docker-compose.yml up -d greetings-app-dev sleep infinity || echo "Container STARTED on DEV Environment"
+              run: docker compose -f docker-compose.yml up -d greetings-app-dev|| echo "Container STARTED on DEV Environment"
             - name: Verify container is running by filtering running containers
               run: docker ps --filter "name=greetings-app-dev"
     tests-on-dev:
@@ -66,7 +66,7 @@ jobs:
             - name: Removing docker service if existing
               run: docker-compose rm -f docker-compose.yml greetings-app-stg || echo "Container REMOVED"
             - name: Starting docker service with latest image
-              run: docker-compose -f docker-compose.yml up -d greetings-app-stg sleep infinity || echo "Container STARTED on STG Environment"
+              run: docker-compose -f docker-compose.yml up -d greetings-app-stg || echo "Container STARTED on STG Environment"
             - name: Verify container is running by filtering running containers
               run: docker ps --filter "name=greetings-app-stg"
     tests-on-stg:
@@ -98,7 +98,7 @@ jobs:
             - name: Removing docker service if existing
               run: docker-compose rm -f docker-compose.yml greetings-app-prod || echo "Container REMOVED"
             - name: Starting docker service with latest image
-              run: docker-compose -f docker-compose.yml up -d greetings-app-prod sleep infinity|| echo "Container STARTED on PROD Environment"
+              run: docker-compose -f docker-compose.yml up -d greetings-app-prod || echo "Container STARTED on PROD Environment"
             - name: Verify container is running by filtering running containers
               run: docker ps --filter "name=greetings-app-prod"
     tests-on-prod:
