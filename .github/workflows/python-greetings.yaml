@@ -47,7 +47,7 @@ jobs:
             - name: Pulling latest version of api-tests image from Docker Hub
               run: docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/api-tests:latest
             - name: Running container  from the deploy job
-              run: docker run -p 7001:3000 --gveljan/python-greetings-app:latest
+              run: docker run -p 7001:3000 gveljan/python-greetings-app:latest
             # - name: Starting docker service with latest image
             #   run: docker compose -f docker-compose.yml up -d greetings-app-dev || echo "Container STARTED on DEV Environment"
             # - name: Verify container is running by filtering running containers
