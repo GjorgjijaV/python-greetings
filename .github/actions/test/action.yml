@@ -16,6 +16,15 @@ runs:
     - name: Pulling latest version of api-tests image from Docker Hub
       run: docker pull ${{ inputs.docker_hub_username }}/api-tests:latest
       shell: bash
-    - name: Running API Tests against DEV Environment
+    - name: Starting docker service with latest image
+      run: docker compose -f docker-compose.yml up -d greetings-app-${{ inputs.environment }} || echo "Container STARTED on ${{ inputs.environment }} Environment"
+      shell: bash
+    - name: Verify container is running by filtering running containers
+      run: docker ps --filter "name=greetings-app-${{ inputs.environment }}"
+      shell: bash
+    - name: Running API Tests against ${{ inputs.environment }} Environment
       run: docker run --network="host" --rm ${{ inputs.docker_hub_username }}/api-tests:latest run greetings greetings_${{ inputs.environment }}
       shell: bash
+
+      ## Note: I am again doing compose up here because when one jobs end the containers are stopped and removed along with the deploy job.
+      ## Maybe a better solution would be to put this two jobs in one.

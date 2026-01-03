@@ -32,10 +32,6 @@ jobs:
               with:
                 environment: 'dev'
                 docker_hub_username: ${{ secrets.DOCKER_HUB_USERNAME }}
-            # - name: Starting docker service with latest image
-            #   run: docker compose -f docker-compose.yml up -d greetings-app-dev || echo "Container STARTED on DEV Environment"
-            # - name: Verify container is running by filtering running containers
-            #   run: docker ps --filter "name=greetings-app-dev"
     deploy-to-stg:
         runs-on: ubuntu-latest
         needs: [tests-on-dev]
@@ -53,10 +49,6 @@ jobs:
             - uses: ./.github/actions/test
               with:
                 environment: 'stg'
-            # - name: Starting docker service with latest image
-            #   run: docker compose -f docker-compose.yml up -d greetings-app-stg || echo "Container STARTED on STG Environment"
-            # - name: Verify container is running by filtering running containers
-            #   run: docker ps --filter "name=greetings-app-stg"
     deploy-to-prod:
         runs-on: ubuntu-latest
         needs: [tests-on-stg]
@@ -76,7 +68,3 @@ jobs:
               with:
                 environment: 'prod'
                 docker_hub_username: ${{ secrets.DOCKER_HUB_USERNAME }}
-            # - name: Starting docker service with latest image
-            #   run: docker compose -f docker-compose.yml up -d greetings-app-prod || echo "Container STARTED on PROD Environment"
-            # - name: Verify container is running by filtering running containers
-            #   run: docker ps --filter "name=greetings-app-prod"
