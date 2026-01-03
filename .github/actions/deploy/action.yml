@@ -11,7 +11,7 @@ runs:
   using: 'composite'
   steps:
     - name: Step decription
-      run: echo "Deploying to ${{ upper(inputs.environment)}} Environment..."
+      run: echo "Deploying to ${{ inputs.environment}} Environment..."
       shell: bash
     - name: Pulling latest version of python-greetings-app image from Docker Hub
       run: docker pull ${{ inputs.docker_hub_username }}/python-greetings-app:latest
